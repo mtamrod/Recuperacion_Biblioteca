@@ -1,60 +1,101 @@
 package org.pebiblioteca
 
 /**
- * La clase GestorBiblioteca se encarga de la gestión de los libros sobre el catalogo-
+ * La clase GestorBiblioteca se encarga de la gestión de los libros sobre el catalogo.
  */
 class GestorBiblioteca(libro: Libro) {
-    val catalogo = mutableListOf(libro)
-    var registro = listOf(libro.estado)
+    val catalogo: MutableList<Libro> = mutableListOf()
+    var registro: MutableMap<Int, Estado> = mutableMapOf()
+
     /**
      * El método agregarLibro se encarga de añadir el nuevo Libro que se indique al catálogo (lista) de libros existentes.
      */
-    fun agregarLibro (libro: Libro) {
-        catalogo.add(libro)
-    }
-
-    /**
-     * El método eliminarLibro se encarga de quitar un Libro del catálogo (lista) de libros existentes.
-     */
-    fun eliminarLibro (libro: Libro) {
-        catalogo.remove(libro)
-    }
-
-    /**
-     * El método registrarPrestamo se encarga de cambiar el estado de un Libro a prestado si el Libro si verifica que está disponible. En caso de que el Libro no esté disponible no se podrá cambiar el estado a prestado.
-     */
-    fun registrarPrestamo (libro: Libro) {
-        if (libro.estado == "disponible") {
-            libro.estado = "prestado"
+    fun agregarLibro(libro: Libro) {
+        if (buscarLibro(libro) == null) {
+            catalogo.add(libro)
         } else {
-            println("El Libro indicado no se encuentra disponible")
+            println("El libro indicado ya existe")
         }
-        registro += ""
     }
 
     /**
-     * El método devolverLibro se encarga de modificar el estado del Libro a disponible y si este estaba prestado. En caso contrario su estado se quedará como disponible.
+     * buscarLibro controla si el libro es o no nulo.
      */
-    fun devolverLibro (libro: Libro) {
-        if (libro.estado == "prestado") {
-            libro.estado = "disponible"
+    fun buscarLibro(libro: Libro): Libro? {
+        return catalogo.find { it.Id == libro.Id }
+    }
+
+    /**
+     * El método eliminarLibro se encarga de eliminar un Libro del catálogo de libros existentes.
+     */
+    fun eliminarLibro(libro: Libro) {
+        if (buscarLibro(libro) != null) {
+            catalogo.remove(libro)
+        } else {
+            println("El libro indicado es inexistente")
+        }
+    }
+
+    /**
+     * El método registrarPrestamo cambia el estado de un Libro de PRESTADO a DISPONIBLE. En caso de que el Libro no esté DISPONIBLE no se cambia su estado.
+     */
+    fun registrarPrestamo(libro: Libro) {
+        if (buscarLibro(libro) != null) {
+            if (libro.estado != Estado.DISPONIBLE) {
+                println("El libro ya está prestado")
+            }
+            libro.estado = Estado.PRESTADO
+        } else {
+            println("El libro indicado es inexistente")
+        }
+    }
+
+    /**
+     * El método devolverLibro modifica el estado del Libro a DISPONIBLE en caso de que esté PRESTADO. En caso contrario se quedará como DISPONIBLE.
+     */
+    fun devolverLibro(libro: Libro) {
+        if (buscarLibro(libro) != null) {
+            if (libro.estado != Estado.PRESTADO) {
+                println("No se puede devolver un libro no prestado")
+            }
+            libro.estado = Estado.DISPONIBLE
+        } else {
+            println("El libro indicado es inexistente")
         }
     }
 
     /**
      * El método disponibilidadLibro se encarga comprobar el estado actual de un Libro sin modificarlo.
      */
-    fun disponibilidadLibro (libro: Libro) {
-        print("El Libro se encuentra ${libro.estado}")
+    fun disponibilidadLibro(libro: Libro) {
+        if (buscarLibro(libro) != null) {
+            print("El Libro se encuentra ${libro.estado}")
+        } else {
+            println("El libro indicado es inexistente")
+        }
     }
 
     /**
-     * El método mostrarLibro se encarga de mostrar todos los libros que se encuentren en un estado fitrados por:
-     * "todos": que muestra todos los libros.
-     * "disponible": que muestra todos los libros disponibles.
-     * "prestado": que muestra todos los libros prestados.
+     * El método retornarLibro muestra un menú que se encarga de mostrar todos los libros que se encuentren en un estado determinado.
+     * Puede mostrar todos los libros, los libros prestado o los libros disponibles.
      */
-    fun mostrarLibro (libro: Libro) {
+    fun retornarLibro(libro: Libro) {
+        do {
+            println("MENU:")
+            println("1. Mostrar libros disponibles")
+            println("2. Mostrar libros prestados")
+            println("3. Mostrar todos los libros")
+            println("4. Salir")
+            print("Ingrese su opción: ")
 
+            val opcion = readln().toIntOrNull()
+
+            when (opcion) {
+                1 -> println(catalogo.filter { it.estado == Estado.DISPONIBLE })
+                2 -> println(catalogo.filter { it.estado == Estado.PRESTADO })
+                3 -> println(catalogo)
+                else -> println("Opción no válida")
+            }
+        } while (opcion != 4)
     }
 }

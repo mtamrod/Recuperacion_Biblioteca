@@ -65,7 +65,7 @@ class GestorBiblioteca(libro: Libro) {
     }
 
     /**
-     * El método disponibilidadLibro se encarga comprobar el estado actual de un Libro sin modificarlo.
+     * El metodo disponibilidadLibro se encarga comprobar el estado actual de un Libro sin modificarlo.
      */
     fun disponibilidadLibro(libro: Libro) {
         if (buscarLibro(libro) != null) {

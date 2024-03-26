@@ -1,9 +1,10 @@
 package org.pebiblioteca
 
+
 /**
  * La clase GestorBiblioteca se encarga de la gestión de los libros sobre el catalogo.
  */
-class GestorBiblioteca(libro: Libro) {
+open class GestorBiblioteca(libro: Libro) {
     val catalogo: MutableList<Libro> = mutableListOf()
     var registro: MutableMap<Int, Estado> = mutableMapOf()
 

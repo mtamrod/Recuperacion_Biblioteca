@@ -5,7 +5,7 @@ import java.util.*
 /**
  * La clase GestorBiblioteca se encarga de la gestión de los libros sobre el catalogo.
  */
-open class GestorBiblioteca(libro: Libro) {
+open class GestorBiblioteca() {
     val catalogo: MutableList<Libro> = mutableListOf()
     var registro: MutableMap<Int, Estado> = mutableMapOf()
 
@@ -34,7 +34,7 @@ open class GestorBiblioteca(libro: Libro) {
      * buscarLibro controla si el libro es o no nulo.
      */
     fun buscarLibro(libro: Libro): Libro? {
-        return catalogo.find { it.Id == libro.Id }
+        return catalogo.find { it.uuid == libro.uuid }
     }
 
     /**

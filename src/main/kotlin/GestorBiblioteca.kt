@@ -1,11 +1,23 @@
 package org.pebiblioteca
 
+import java.util.*
+
 /**
  * La clase GestorBiblioteca se encarga de la gestión de los libros sobre el catalogo.
  */
 open class GestorBiblioteca(libro: Libro) {
     val catalogo: MutableList<Libro> = mutableListOf()
     var registro: MutableMap<Int, Estado> = mutableMapOf()
+
+    /**
+     * Método estático que genera un Identificador Único (UUID)
+     */
+    companion object {
+        fun generarIdentificadorUnico(): UUID? {
+            val uuid = UUID.randomUUID()
+            return uuid
+        }
+    }
 
     /**
      * El método agregarLibro se encarga de añadir el nuevo Libro que se indique al catálogo (lista) de libros existentes.

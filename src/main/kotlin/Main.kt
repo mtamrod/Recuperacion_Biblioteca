@@ -1,7 +1,6 @@
 package org.pebiblioteca
 
 fun main() {
-    println("Hello World!")
 }
 
 fun UserMenu() {
@@ -19,13 +18,15 @@ fun UserMenu() {
         val opcion = readln().toIntOrNull()
 
         when (opcion) {
-            1 ->
-            2 ->
-            3 ->
-            4 ->
-            5 ->
-            6 ->
+            1 -> GestorBiblioteca.agregarLibro(titulo, autor)
+            2 -> eliminarLibro()
+            3 -> registrarPrestamo()
+            4 -> devolverLibro()
+            5 -> disponibilidadLibro()
+            6 -> retornarLibro()
             else -> println("Opción no válida")
         }
     } while (opcion != 7)
 }
+
+

@@ -1,6 +1,5 @@
 package org.pebiblioteca
 
-
 /**
  * La clase GestorBiblioteca se encarga de la gestión de los libros sobre el catalogo.
  */
@@ -100,3 +99,4 @@ open class GestorBiblioteca(libro: Libro) {
         } while (opcion != 4)
     }
 }
+
